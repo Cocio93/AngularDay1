@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app="DemoApp" ng-controller="CarController as ctrl">
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>{{ctrl.title}}</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        <script src="http://code.angularjs.org/1.4.7/i18n/angular-locale_da.js"></script>
+    </head>
+    <body>
+        <h1>{{ctrl.title}}</h1>
+        <h2>Number of cars {{ctrl.cars.length}}</h2>
+        <table border="1px solid black">
+            <tr>
+                <th ng-click="sortBy()">ID</th>
+                <th ng-click="sortBy('make')">Make
+                <span class="sortorder" ng-show="propertyName === 'make'" ng-class="{reverse: reverse}"></span>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Registered</th>
+                <th>Description</th>
+                <th>Price</th>
+
+            </tr>
+
+            <tr ng-repeat="x in ctrl.cars | filter:orderBy:propertyName">
+                <td>{{$index}}</td>
+                <td>{{x.make}}</td>
+                <td>{{x.model}}</td>
+                <td>{{x.year}}</td>
+                <td>{{x.registered| date}}</td>
+                <td>{{x.description}}</td> 
+                <td>{{x.price| currency}}</td>
+            </tr>
+        </table>
+        <br>
+        <label>Search: <input type="search" ng-model="searchText"></label>
+        <!-- Add your Content here -->
+        <script>
+                    var myApp = angular.module('DemoApp', []);
+                    myApp.controller('CarController', [function () {
+                            var self = this;
+                            self.cars = [
+                                {year: 1997, registered: 867621600000, make: 'Ford', model: 'E350', description: 'ac, abs, moon', price: 3000}
+                                , {year: 1999, registered: 945212400000, make: 'Chevy', model: 'Venture', description: 'None', price: 4900}
+                                , {year: 2000, registered: 953766000000, make: 'Chevy', model: 'Venture', description: '', price: 5000}
+                                , {year: 1996, registered: 844380000000, make: 'Jeep', model: 'Grand Cherokee', description: 'Air, moon roof'
+                                    , price: 4799}
+                            ];
+                            self.title = "Cars Demo App";
+                            self.predicate = 'make';
+                        }]);
+        </script>
+    </body>
+</html>
